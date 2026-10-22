@@ -1,0 +1,205 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#100b08">
+
+  <title>Thadingyut Festival | NEXTogether</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+Myanmar:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="bokeh" aria-hidden="true"></div>
+  <div class="background-glow" aria-hidden="true"></div>
+
+  <main class="page">
+
+    <!-- Header -->
+    <header class="heading">
+      <span class="signature signature-left">Made by Chan</span>
+
+      <div class="heading-copy">
+        <p class="eyebrow">A FESTIVAL OF LIGHT &amp; LOVE</p>
+
+        <h1 lang="my">ပျော်ရွှင်ဖွယ်ရာ သီတင်းကျွတ် ဖြစ်ပါစေ</h1>
+
+        <p class="subtitle">
+          Wishing you peace, happiness and beautiful memories.
+        </p>
+      </div>
+
+      <span class="signature signature-right">NEXTogether</span>
+    </header>
+
+    <!-- Main festival scene -->
+    <section class="festival-scene" aria-label="Thadingyut greetings and animated lava lamp">
+
+      <!-- Burmese greeting: text only -->
+      <article class="paper-wrap paper-left">
+        <div class="paper">
+          <div class="paper-content" lang="my">
+            <p class="letter-body" id="burmeseText"></p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Center lava lamp -->
+      <div class="lamp-area">
+        <div class="lamp-halo"></div>
+
+        <div class="lamp">
+          <div class="lamp-cap"></div>
+
+          <div class="lamp-glass">
+            <canvas
+              id="lavaCanvas"
+              aria-label="Animated glowing lava inside the lamp">
+            </canvas>
+
+            <div class="glass-reflection"></div>
+          </div>
+
+          <div class="lamp-neck"></div>
+
+          <div class="lamp-base">
+            <span class="base-light"></span>
+            <span class="base-bottom"></span>
+          </div>
+        </div>
+
+        <div class="lamp-caption">
+          <span class="caption-star">✦</span>
+          <span>LIGHT • LOVE • TRADITION</span>
+          <span class="caption-star">✦</span>
+        </div>
+      </div>
+
+      <!-- English greeting: text only -->
+      <article class="paper-wrap paper-right">
+        <div class="paper">
+          <div class="paper-content">
+            <p class="letter-body" id="englishText"></p>
+          </div>
+        </div>
+      </article>
+
+    </section>
+
+    <!-- Replay greeting -->
+    <div class="letter-actions">
+      <button id="replayLetters" class="replay-button" type="button">
+        <span aria-hidden="true">↻</span>
+        Replay greeting letters
+      </button>
+    </div>
+
+    <!-- Animation controls -->
+    <section class="controls" aria-label="Animation settings">
+
+      <div class="controls-heading">
+        <div>
+          <p class="eyebrow">CUSTOMIZE</p>
+          <h2>Animation controls</h2>
+        </div>
+
+        <button
+          id="toggleButton"
+          class="primary-button"
+          type="button"
+          aria-pressed="false">
+          <span aria-hidden="true">Ⅱ</span> Pause
+        </button>
+      </div>
+
+      <div class="control-grid">
+
+        <label class="control">
+          <span class="control-label">
+            <span>Glow intensity</span>
+            <output id="glowValue" for="glowControl">75%</output>
+          </span>
+
+          <input
+            id="glowControl"
+            type="range"
+            min="20"
+            max="100"
+            value="75">
+        </label>
+
+        <label class="control">
+          <span class="control-label">
+            <span>Animation speed</span>
+            <output id="speedValue" for="speedControl">1.0×</output>
+          </span>
+
+          <input
+            id="speedControl"
+            type="range"
+            min="3"
+            max="18"
+            value="10">
+        </label>
+
+        <label class="control">
+          <span class="control-label">
+            <span>Liquid color</span>
+          </span>
+
+          <select id="colorControl">
+            <option value="lava">Classic lava</option>
+            <option value="ember">Ember red</option>
+            <option value="gold">Solar gold</option>
+            <option value="violet">Cosmic violet</option>
+          </select>
+        </label>
+
+        <button id="resetButton" class="reset-button" type="button">
+          ↺ Reset settings
+        </button>
+
+      </div>
+    </section>
+
+
+    <!-- Background music controls -->
+    <section class="music-panel" aria-label="Background music controls">
+      <div class="music-copy">
+        <p class="eyebrow">FESTIVAL AMBIENCE</p>
+        <h2>Background music</h2>
+        <p id="musicStatus" class="music-status" aria-live="polite">Trying to start music…</p>
+      </div>
+      <div class="music-actions">
+        <button id="musicToggle" class="primary-button music-toggle" type="button" aria-pressed="false">
+          <span aria-hidden="true">▶</span> Play music
+        </button>
+        <label class="control volume-control">
+          <span class="control-label">
+            <span>Volume</span>
+            <output id="volumeValue" for="volumeControl">50%</output>
+          </span>
+          <input id="volumeControl" type="range" min="0" max="100" value="50" aria-label="Background music volume">
+        </label>
+      </div>
+      <audio id="backgroundMusic" src="assets/background-music.mp3" autoplay loop preload="auto" playsinline></audio>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <p>Celebrating the beauty of Thadingyut.</p>
+      <p>HTML <span>•</span> CSS <span>•</span> JavaScript <span>•</span> NEXTogether</p>
+    </footer>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

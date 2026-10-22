@@ -1,0 +1,986 @@
+
+/* ========================================
+   THADINGYUT FESTIVAL
+   Minimal Greeting Text + Lava Lamp
+======================================== */
+
+:root {
+  --glow: 0.75;
+  --gold: #e8bd7c;
+  --gold-light: #ffe4b9;
+  --cream: #f5eee2;
+  --background: #100b08;
+  --muted: #b8a18a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+  color: var(--cream);
+  font-family: "DM Sans", Arial, sans-serif;
+
+  background:
+    radial-gradient(ellipse at 50% 34%, #29140b 0%, transparent 46%),
+    radial-gradient(ellipse at 50% 100%, #1a0e08 0%, transparent 50%),
+    var(--background);
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button,
+input,
+select {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid #f1c98f;
+  outline-offset: 4px;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* ========================================
+   BACKGROUND LIGHTS
+======================================== */
+
+.bokeh {
+  position: fixed;
+  z-index: -2;
+  inset: -10%;
+  pointer-events: none;
+  opacity: 0.38;
+  filter: blur(13px);
+
+  background:
+    radial-gradient(circle at 12% 18%, #fff1d8 0 3px, transparent 28px),
+    radial-gradient(circle at 80% 13%, #f5e4c8 0 5px, transparent 35px),
+    radial-gradient(circle at 91% 46%, #e6cba7 0 3px, transparent 28px),
+    radial-gradient(circle at 22% 72%, #ffe4bc 0 4px, transparent 30px),
+    radial-gradient(circle at 70% 83%, #f5d4a0 0 5px, transparent 34px);
+
+  animation: backgroundDrift 18s ease-in-out infinite alternate;
+}
+
+.background-glow {
+  position: fixed;
+  z-index: -1;
+  width: 450px;
+  height: 450px;
+  left: 50%;
+  top: 38%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: #b9380c;
+  opacity: calc(var(--glow) * 0.055);
+  filter: blur(110px);
+  pointer-events: none;
+}
+
+@keyframes backgroundDrift {
+  to {
+    transform: translate(1.5%, -2%) scale(1.05);
+  }
+}
+
+/* ========================================
+   PAGE AND HEADER
+======================================== */
+
+.page {
+  width: min(1440px, calc(100% - 48px));
+  margin: 0 auto;
+  padding: 38px 0 26px;
+}
+
+.heading {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 120px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.heading-copy {
+  max-width: 850px;
+  padding: 0 100px;
+}
+
+.eyebrow {
+  margin: 0 0 12px;
+  color: #c7a77c;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+}
+
+.heading h1 {
+  margin: 0;
+  color: var(--gold-light);
+  font-family: "DM Sans", sans-serif;
+  font-size: clamp(24px, 3.3vw, 39px);
+  font-weight: 700;
+  line-height: 1.7;
+  text-shadow: 0 0 28px #e58a3240;
+}
+
+.subtitle {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.signature {
+  position: absolute;
+  top: 12px;
+  color: #e7c99c;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+}
+
+.signature-left {
+  left: 0;
+}
+
+.signature-right {
+  right: 0;
+}
+
+/* ========================================
+   MAIN FESTIVAL SCENE
+======================================== */
+
+.festival-scene {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 230px minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(18px, 3vw, 42px);
+
+  min-height: 550px;
+  padding: 30px clamp(20px, 4vw, 55px);
+
+  border: 1px solid #eac28b20;
+  border-radius: 20px;
+
+  background:
+    radial-gradient(ellipse at center, #32140760 0%, transparent 57%),
+    linear-gradient(145deg, #1b100bde, #090706ed);
+
+  box-shadow:
+    0 25px 70px #0007,
+    inset 0 1px #ffffff08;
+}
+
+/* ========================================
+   MINIMAL GREETING TEXT
+   No posters, cards, or paper backgrounds
+======================================== */
+
+.paper-wrap {
+  min-width: 0;
+  perspective: 1000px;
+  opacity: 0;
+  animation: paperEnter 1.2s ease-out forwards;
+}
+
+.paper-left {
+  animation-delay: 0.15s;
+}
+
+.paper-right {
+  animation-delay: 0.5s;
+}
+
+.paper {
+  position: relative;
+  min-height: 0;
+  padding: 20px 8px;
+  overflow: visible;
+
+  color: var(--cream);
+  text-align: center;
+
+  /* Completely remove the paper appearance */
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.paper::before,
+.paper::after,
+.paper-corner {
+  display: none;
+}
+
+.paper-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* Main greeting sentences */
+
+.letter-body {
+  min-height: 170px;
+  margin: 0;
+
+  color: #f5eee2;
+  font-family: "DM Sans", sans-serif;
+  font-size: clamp(13px, 1.05vw, 16px);
+  font-weight: 400;
+  line-height: 2.2;
+
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+  text-align: center;
+
+  text-shadow: 0 0 18px #e8bd7c25;
+}
+
+/* Burmese greeting */
+
+.paper-left .letter-body {
+  color: #f5d9a5;
+  font-family: "DM Sans", sans-serif;
+  font-size: clamp(13px, 1.15vw, 17px);
+  line-height: 2.3;
+}
+
+/* English greeting */
+
+.paper-right .letter-body {
+  color: #f5eee2;
+  font-family: "DM Sans", sans-serif;
+  font-size: clamp(13px, 1.05vw, 16px);
+  line-height: 2.2;
+}
+
+/* Typing cursor */
+
+.letter-body.typing::after {
+  content: "▋";
+  display: inline-block;
+  margin-left: 3px;
+  color: var(--gold);
+  text-shadow: 0 0 10px #e8bd7c80;
+  animation: cursorBlink 0.8s steps(2, start) infinite;
+}
+
+@keyframes paperEnter {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cursorBlink {
+  to {
+    visibility: hidden;
+  }
+}
+
+/* ========================================
+   LAVA LAMP
+======================================== */
+
+.lamp-area {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  animation: lampAppear 1.4s ease both;
+}
+
+.lamp-halo {
+  position: absolute;
+  width: 220px;
+  height: 330px;
+  border-radius: 50%;
+  background: #ff420c;
+  opacity: calc(var(--glow) * 0.2);
+  filter: blur(65px);
+  pointer-events: none;
+}
+
+.lamp {
+  position: relative;
+  z-index: 1;
+  width: 190px;
+  height: 420px;
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 18px #ff4a152b);
+}
+
+.lamp-cap {
+  position: absolute;
+  z-index: 4;
+  top: 0;
+  left: 63px;
+  width: 64px;
+  height: 22px;
+  border-radius: 12px 12px 6px 6px;
+
+  background: linear-gradient(
+    90deg,
+    #171715,
+    #4c4840 45%,
+    #171715
+  );
+
+  box-shadow: 0 3px 9px #000b;
+}
+
+.lamp-glass {
+  position: absolute;
+  top: 17px;
+  left: 42px;
+  width: 106px;
+  height: 310px;
+  overflow: hidden;
+
+  clip-path: polygon(20% 0, 80% 0, 100% 100%, 0 100%);
+
+  background: linear-gradient(
+    90deg,
+    #ff5a1610,
+    #a51b0808 48%,
+    #ff8b3212
+  );
+}
+
+#lavaCanvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.glass-reflection {
+  position: absolute;
+  top: 7%;
+  left: 22%;
+  width: 7px;
+  height: 74%;
+  border-radius: 100%;
+
+  background: linear-gradient(
+    transparent,
+    #fff0d82b,
+    transparent
+  );
+
+  transform: rotate(7deg);
+  pointer-events: none;
+}
+
+.lamp-neck {
+  position: absolute;
+  bottom: 82px;
+  left: 70px;
+  width: 50px;
+  height: 18px;
+  background: #201c17;
+}
+
+.lamp-base {
+  position: absolute;
+  bottom: 0;
+  left: 26px;
+  width: 138px;
+  height: 86px;
+  border-radius: 9px 9px 25px 25px;
+
+  background: linear-gradient(
+    90deg,
+    #171817,
+    #44423c 42%,
+    #222321 76%,
+    #0e0f0e
+  );
+
+  box-shadow:
+    inset 0 3px 4px #8e7a6033,
+    0 8px 20px #000c;
+}
+
+.base-light {
+  display: block;
+  height: 5px;
+  margin-top: 7px;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #ff6c24b5,
+    transparent
+  );
+
+  filter: blur(2px);
+}
+
+.base-bottom {
+  position: absolute;
+  right: 12px;
+  bottom: 9px;
+  left: 12px;
+  height: 3px;
+  border-radius: 50%;
+  background: #ffffff13;
+}
+
+.lamp-caption {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 17px;
+
+  color: #d9b88b;
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+}
+
+.caption-star {
+  color: #ffbb70;
+  animation: starPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes lampAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes starPulse {
+  50% {
+    opacity: 0.45;
+    text-shadow: 0 0 10px #ffb35d;
+  }
+}
+
+/* ========================================
+   REPLAY BUTTON
+======================================== */
+
+.letter-actions {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0 0;
+}
+
+.replay-button,
+.primary-button,
+.reset-button {
+  border-radius: 8px;
+  padding: 11px 15px;
+  font-family: "DM Sans", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    filter 0.2s ease;
+}
+
+.replay-button {
+  border: 1px solid #c9a06b70;
+  color: #ecd0a5;
+  background: #21150e;
+}
+
+.replay-button:hover,
+.reset-button:hover {
+  background: #352216;
+  transform: translateY(-1px);
+}
+
+/* ========================================
+   ANIMATION CONTROLS
+======================================== */
+
+.controls {
+  margin-top: 24px;
+  padding: 22px;
+
+  border: 1px solid #ffffff13;
+  border-radius: 14px;
+
+  background: #120e0be8;
+  box-shadow: 0 14px 38px #0004;
+}
+
+.controls-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 23px;
+}
+
+.controls-heading .eyebrow {
+  margin-bottom: 5px;
+}
+
+.controls-heading h2 {
+  margin: 0;
+  color: #f6e6d2;
+  font-size: 16px;
+}
+
+.primary-button {
+  border: 0;
+  color: #fff7ed;
+  background: linear-gradient(135deg, #e77b36, #a83a17);
+}
+
+.primary-button:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.12);
+}
+
+.control-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px 28px;
+}
+
+.control {
+  display: block;
+  min-width: 0;
+  color: #c9b7a4;
+  font-size: 11px;
+}
+
+.control-label {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 13px;
+}
+
+output {
+  color: #f1bc86;
+  font-variant-numeric: tabular-nums;
+}
+
+input[type="range"] {
+  width: 100%;
+  accent-color: #f18a4b;
+  cursor: pointer;
+}
+
+select {
+  width: 100%;
+  padding: 10px;
+
+  border: 1px solid #ffffff20;
+  border-radius: 7px;
+
+  color: #eee0ce;
+  background: #211811;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.reset-button {
+  align-self: end;
+  justify-self: start;
+
+  border: 1px solid #ffffff20;
+  color: #e4d2bf;
+  background: #ffffff07;
+}
+
+/* ========================================
+   FOOTER
+======================================== */
+
+footer {
+  padding: 23px 0 0;
+  text-align: center;
+  color: #8e7d6c;
+  font-size: 10px;
+  line-height: 1.8;
+}
+
+footer p {
+  margin: 3px 0;
+}
+
+footer span {
+  margin: 0 5px;
+  color: #e6a15c;
+}
+
+/* ========================================
+   TABLET
+======================================== */
+
+@media (max-width: 1050px) {
+  .page {
+    width: min(900px, calc(100% - 32px));
+  }
+
+  .heading-copy {
+    padding: 0 80px;
+  }
+
+  .festival-scene {
+    grid-template-columns: minmax(0, 1fr) 190px minmax(0, 1fr);
+    gap: 18px;
+    padding: 25px 20px;
+  }
+
+  .lamp {
+    transform: scale(0.9);
+    margin: -21px 0;
+  }
+
+  .paper {
+    padding: 18px 4px;
+  }
+
+  .letter-body,
+  .paper-left .letter-body,
+  .paper-right .letter-body {
+    font-size: 12px;
+    line-height: 2.1;
+  }
+}
+
+/* ========================================
+   MOBILE AND SMALL TABLETS
+======================================== */
+
+@media (max-width: 700px) {
+  .page {
+    width: calc(100% - 24px);
+    padding-top: 25px;
+  }
+
+  .heading {
+    padding: 30px 0 0;
+    margin-bottom: 22px;
+  }
+
+  .heading-copy {
+    padding: 0;
+  }
+
+  .signature {
+    top: 0;
+    font-size: 10px;
+  }
+
+  .signature-left {
+    left: 0;
+  }
+
+  .signature-right {
+    right: 0;
+  }
+
+  .heading h1 {
+    font-size: clamp(21px, 5.5vw, 30px);
+    line-height: 1.8;
+  }
+
+  .subtitle {
+    font-size: 11px;
+  }
+
+  .festival-scene {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 20px 14px;
+    padding: 22px 15px;
+  }
+
+  .lamp-area {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+
+  .paper-left {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .paper-right {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .lamp {
+    transform: scale(0.94);
+    margin: -12px 0;
+  }
+
+  .paper {
+    padding: 12px 2px;
+  }
+
+  .letter-body,
+  .paper-left .letter-body,
+  .paper-right .letter-body {
+    min-height: 205px;
+    font-size: 12px;
+    line-height: 2.1;
+  }
+
+  .controls {
+    padding: 18px 14px;
+  }
+
+  .control-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+/* ========================================
+   VERY SMALL PHONES
+======================================== */
+
+@media (max-width: 390px) {
+  .heading {
+    padding-top: 32px;
+  }
+
+  .signature {
+    font-size: 9px;
+    letter-spacing: 0.07em;
+  }
+
+  .festival-scene {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 23px;
+    padding: 20px 15px;
+  }
+
+  .lamp-area {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .paper-left {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .paper-right {
+    grid-column: 1;
+    grid-row: 3;
+  }
+
+  .paper {
+    padding: 8px 5px;
+  }
+
+  .letter-body,
+  .paper-left .letter-body,
+  .paper-right .letter-body {
+    min-height: 0;
+    font-size: 14px;
+    line-height: 2.2;
+  }
+}
+
+/* ========================================
+   ACCESSIBILITY
+======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+
+/* ========================================
+   BACKGROUND MUSIC CONTROLS
+======================================== */
+
+.music-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-top: 18px;
+  padding: 20px 22px;
+  border: 1px solid #eac28b20;
+  border-radius: 14px;
+  background: linear-gradient(145deg, #17100be8, #100b08e8);
+  box-shadow: 0 14px 38px #0003;
+}
+
+.music-copy h2 {
+  margin: 0 0 6px;
+  color: #f6e6d2;
+  font-size: 16px;
+}
+
+.music-status {
+  margin: 0;
+  color: #b8a18a;
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+.music-actions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  width: min(100%, 480px);
+}
+
+.music-toggle {
+  flex-shrink: 0;
+}
+
+.volume-control {
+  flex: 1;
+  min-width: 130px;
+}
+
+#backgroundMusic {
+  display: none;
+}
+
+@media (max-width: 700px) {
+  .music-panel {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 18px;
+    padding: 18px 14px;
+  }
+
+  .music-actions {
+    width: 100%;
+    align-items: stretch;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .music-toggle {
+    align-self: flex-start;
+  }
+}
+
+
+/* ========================================
+   RESPONSIVE GREETING ARTICLES
+   Keep Burmese and English readable on phones/tablets
+======================================== */
+.paper-wrap,
+.paper,
+.paper-content {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.letter-body {
+  hyphens: auto;
+  text-wrap: pretty;
+}
+
+.paper-left .letter-body {
+  font-family: "Noto Sans Myanmar", "DM Sans", sans-serif;
+  line-height: 2.15;
+}
+
+@media (min-width: 701px) and (max-width: 1050px) {
+  .festival-scene {
+    grid-template-columns: minmax(0, 1fr) minmax(165px, 190px) minmax(0, 1fr);
+    gap: clamp(12px, 2vw, 20px);
+    padding-inline: clamp(14px, 2.5vw, 24px);
+  }
+  .paper-left .letter-body,
+  .paper-right .letter-body {
+    min-height: 0;
+    font-size: clamp(13px, 1.35vw, 15px);
+    line-height: 2.15;
+  }
+}
+
+/* Mobile: place the lamp first, followed by full-width greeting articles. */
+@media (max-width: 700px) {
+  .festival-scene {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+    padding: 18px clamp(14px, 4vw, 24px) 24px;
+  }
+  .lamp-area { grid-column: 1; grid-row: 1; }
+  .paper-left { grid-column: 1; grid-row: 2; }
+  .paper-right { grid-column: 1; grid-row: 3; }
+  .paper { width: 100%; padding: 10px clamp(4px, 2vw, 12px); }
+  .paper-content {
+    width: 100%;
+    max-width: 620px;
+    margin-inline: auto;
+  }
+  .letter-body,
+  .paper-left .letter-body,
+  .paper-right .letter-body {
+    min-height: 0;
+    font-size: clamp(14px, 3.7vw, 16px);
+    line-height: 2.05;
+    overflow-wrap: break-word;
+    word-break: normal;
+  }
+  .paper-left .letter-body { line-height: 2.2; }
+}
+
+@media (max-width: 390px) {
+  .page { width: calc(100% - 20px); }
+  .festival-scene { gap: 14px; padding: 14px 10px 20px; }
+  .paper { padding-inline: 4px; }
+  .letter-body,
+  .paper-left .letter-body,
+  .paper-right .letter-body {
+    font-size: 14px;
+    line-height: 2.05;
+  }
+  .paper-left .letter-body { line-height: 2.2; }
+}
